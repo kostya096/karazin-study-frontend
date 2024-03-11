@@ -4,7 +4,15 @@ import {useEffect, useState} from "react";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import MainPage from "./pages/MainPage/MainPage.jsx";
 import {getUserInfo} from "./components/functions/auth.jsx";
+import {Navigate} from "react-router-dom";
 
+const ProtectedRoute = ({isAllowed, redirectPath = '/login', children,}) => {
+    if (!isAllowed) {
+        return <Navigate to={redirectPath} replace/>;
+    }
+
+    return children ? children : <Outlet/>;
+};
 
 function App() {
     const [loggedIn, setLoggedIn] = useState(false)
@@ -31,10 +39,25 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/"
-                       element={loggedIn ? <MainPage user={user_functions}/> :
-                           <LoginPage user={user_functions}/>}/>
-                <Route path="/signup" element={<SignUp/>}/>
+                <Route
+                    path="/"
+                    element={
+                        <ProtectedRoute isAllowed={!!user_functions.loggedIn} redirectPath="/sign_in">
+                            <MainPage user={user_functions}/>
+                        </ProtectedRoute>
+                    }/>
+                <Route
+                    path="/sign_in"
+                    element={
+                        <ProtectedRoute isAllowed={!user_functions.loggedIn} redirectPath="/">
+                            <LoginPage user={user_functions}/>
+                        </ProtectedRoute>
+                    }/>
+                <Route path="/sign_up" element={
+                    <ProtectedRoute isAllowed={!user_functions.loggedIn} redirectPath="/">
+                        <SignUp user={user_functions}/>
+                    </ProtectedRoute>
+                }/>
             </Routes>
         </BrowserRouter>
     )

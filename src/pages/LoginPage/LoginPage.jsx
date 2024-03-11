@@ -1,12 +1,14 @@
 import "./LoginPage.css"
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {getUserInfo, loginUser} from "../../components/functions/auth.jsx";
 
 
 const LoginPage = (props) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
+
     const handleSubmit = async e => {
         e.preventDefault();
         let [status, token] = await loginUser({
@@ -24,8 +26,9 @@ const LoginPage = (props) => {
                 console.log(userInfo)
                 props.user.setLoggedIn(true)
                 props.user.setUserInfo(userInfo)
+                navigate("/")
             }
-            //navigate("/signup")
+
         }
     }
     return (
@@ -42,7 +45,7 @@ const LoginPage = (props) => {
                        onChange={e => setPassword(e.target.value)}/>
                 <button type="submit" className="login-button">Sign in</button>
                 <div className="signup-link">
-                    No account? <NavLink to="/signup">Create one</NavLink>
+                    No account? <NavLink to="/sign_up">Create one</NavLink>
                 </div>
             </form>
         </div>

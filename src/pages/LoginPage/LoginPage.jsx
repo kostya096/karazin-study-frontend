@@ -1,40 +1,34 @@
 import "./LoginPage.css"
 import {NavLink, useNavigate} from "react-router-dom";
 import {useState} from "react";
-import {getUserInfo, loginUser} from "../../components/functions/auth.jsx";
+import {useUserLoginMutation} from "../../features/user/userApi.js";
+import {toast} from "react-toastify";
 
 
-const LoginPage = (props) => {
+const LoginPage = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const [login] = useUserLoginMutation()
 
     const handleSubmit = async e => {
         e.preventDefault();
-        let [status, token] = await loginUser({
-            email,
-            password
-        });
-        console.log(status)
-        console.log(token)
-        if (status === false) {
-            console.log(token.detail) // Это ошибка от АПИ,сделай отображение
-        } else {
-            localStorage.setItem("user", JSON.stringify({token: token.access_token}))
-            let [info_status, userInfo] = await getUserInfo(token.access_token);
-            if (info_status) {
-                console.log(userInfo)
-                props.user.setLoggedIn(true)
-                props.user.setUserInfo(userInfo)
-                navigate("/")
-            }
 
+        try {
+            await login({
+                email,
+                password
+            }).unwrap()
+            navigate("/main")
+        } catch(e) {
+            toast.error(e.data.detail)
         }
     }
     return (
         <div className="login-container">
             <form className="login-form" onSubmit={handleSubmit}>
-                <img src={'logo.jpg'} width="200" height="200"
+                <img src={'/logo.jpg'} width="200" height="200"
                      style={{borderRadius: '50%', marginTop: '-130px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)'}}/>
                 <div className={'title'}>
                     Welcome back

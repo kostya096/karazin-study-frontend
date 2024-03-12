@@ -1,18 +1,20 @@
 import "./MainPage.css"
+import Header from "../../components/Header/Header.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {logoutUser} from "../../features/user/userSlice.js";
 
-const MainPage = (props) => {
-    const logout = async e => {
-        e.preventDefault();
-        console.log(props)
-        props.user.setLoggedIn(false)
-        props.user.setUserInfo("")
-        localStorage.removeItem("user")
-    }
+const MainPage = () => {
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user.user)
 
     return (
-        <div className="login-container">
-            <button onClick={logout}>Log out</button>
-        </div>
+        <>
+            <Header/>
+            <div className="login-container">
+                {user?.name} {user?.surname}
+                <button onClick={() => dispatch(logoutUser())}>Log out</button>
+            </div>
+        </>
     );
 };
 

@@ -1,19 +1,22 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import {useState} from "react";
-import {getUserInfo, loginUser, registerUser} from "../../components/functions/auth.jsx";
+// import {getUserInfo, loginUser, registerUser} from "../../components/functions/auth.jsx";
+import {toast} from "react-toastify";
+import {useUserSignupMutation} from "../../features/user/userApi.js";
 
 const SignUp = () => {
     const navigate = useNavigate();
-    const [email, setEmail] = useState();
-    const [name, setName] = useState();
-    const [surname, setSurName] = useState();
-    const [password1, setPassword1] = useState();
-    const [password2, setPassword2] = useState();
+    const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [surname, setSurName] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
 
+    const [signup] = useUserSignupMutation()
 
+    // регайся
     const handleSubmit = async e => {
         e.preventDefault();
-
         /* Тут нужно сделать валидацию всех полей!!
             name >= 4
             surname >= 4
@@ -27,21 +30,21 @@ const SignUp = () => {
             Если есть ошибка в этих условиях - выводить на экран
          */
 
-
-        let [status, token] = await registerUser({
-            name, surname, email, password: password1
-        });
-        if (status === false) {
-            console.log(token.detail) // Это ошибка от АПИ,сделай отображение на экран
-        } else {
-            navigate("/sign_in")
+        try {
+            await signup({
+                name, surname, email, password: password1
+            }).unwrap()
+            navigate("/auth/sign_in")
+            toast.success('Акаунт успішно створений! Для продовження увійдіть в акаунт')
+        } catch (e) {
+            toast.error(e.data.detail)
         }
-
     }
+
     return (<div>
         <div className="login-container">
             <form className="login-form" onSubmit={handleSubmit}>
-                <img src={'logo.jpg'} width="200" height="200"
+                <img src={'/logo.jpg'} width="200" height="200"
                      style={{borderRadius: '50%', marginTop: '-130px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)'}}/>
                 <div className={'title'}>
                     Create your account

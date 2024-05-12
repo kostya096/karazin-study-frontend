@@ -9,7 +9,6 @@ const MainPage = () => {
 
     return (
         <>
-            <Header/>
             <div className="login-container">
                 {user?.name} {user?.surname}
                 <button onClick={() => dispatch(logoutUser())}>Log out</button>

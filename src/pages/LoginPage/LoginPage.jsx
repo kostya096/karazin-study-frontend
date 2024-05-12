@@ -39,7 +39,7 @@ const LoginPage = () => {
                        onChange={e => setPassword(e.target.value)}/>
                 <button type="submit" className="login-button">Sign in</button>
                 <div className="signup-link">
-                    No account? <NavLink to="/sign_up">Create one</NavLink>
+                    No account? <NavLink to="/auth/sign_up">Create one</NavLink>
                 </div>
             </form>
         </div>

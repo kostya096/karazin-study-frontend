@@ -7,12 +7,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import CheckAuth from "./components/auth/CheckAuth.jsx";
 import ProtectedRoute from "./components/auth/ProtectedRoute.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
+import Header from "./components/Header/Header.jsx";
 
 function App() {
     return (
         <BrowserRouter>
             <ToastContainer theme={'colored'}/>
-
+            <Header/>
             <Routes>
                 <Route path='/' element={<CheckAuth />}>
                     <Route path="" element={<HomePage />} />

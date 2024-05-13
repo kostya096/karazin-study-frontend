@@ -34,7 +34,9 @@ function Header() {
     return (
 
         <AppBar position="static">
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" sx={{
+                paddingRight: 0
+            }}>
                 <Toolbar disableGutters>
                     <School sx={{display: {xs: 'none', md: 'flex'}, mr: 1}}/>
                     <Typography

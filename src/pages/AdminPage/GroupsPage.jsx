@@ -1,11 +1,11 @@
 import React from 'react';
 
-function MainPage() {
+function GroupsPage() {
     return (
         <div>
-            MainPage
+            Groups
         </div>
     );
 }
 
-export default MainPage;
+export default GroupsPage;

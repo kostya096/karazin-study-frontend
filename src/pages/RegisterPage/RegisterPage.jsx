@@ -17,18 +17,40 @@ const RegisterPage = () => {
     // регайся
     const handleSubmit = async e => {
         e.preventDefault();
-        /* Тут нужно сделать валидацию всех полей!!
-            name >= 4
-            surname >= 4
-            email>=5
-            password >= 5
 
-            password1 == password2
+        // Валідація полів
+        if (name.length < 4) {
+            toast.error('Ім\'я повинно містити принаймні 4 символи');
+            return;
+        }
 
-            password имеет любой символ, одну заглавную
+        if (surname.length < 4) {
+            toast.error('Прізвище повинно містити принаймні 4 символи');
+            return;
+        }
 
-            Если есть ошибка в этих условиях - выводить на экран
-         */
+        if (email.length < 5) {
+            toast.error('Пошта повинна містити принаймні 5 символів');
+            return;
+        }
+
+        if (password1.length < 5) {
+            toast.error('Пароль повинен містити принаймні 5 символів');
+            return;
+        }
+
+        if (password1 !== password2) {
+            toast.error('Паролі не співпадають');
+            return;
+        }
+
+        // Валідація пароля
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
+        if (!passwordRegex.test(password1)) {
+            toast.error('Пароль повинен складатися з мінімум 5 символів,' +
+                ' також повинен містити одну велику букву.');
+            return;
+        }
 
         try {
             await signup({

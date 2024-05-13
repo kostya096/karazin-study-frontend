@@ -10,12 +10,12 @@ export const PythonIcon = createSvgIcon(
             fill="url(#b)"/>
         <defs>
             <linearGradient id="a" x1="19.075" y1="18.782" x2="34.898" y2="34.658" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#387EB8"/>
-                <stop offset="1" stop-color="#366994"/>
+                <stop stopColor="#387EB8"/>
+                <stop offset="1" stopColor="#366994"/>
             </linearGradient>
             <linearGradient id="b" x1="28.809" y1="28.882" x2="45.803" y2="45.163" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FFE052"/>
-                <stop offset="1" stop-color="#FFC331"/>
+                <stop stopColor="#FFE052"/>
+                <stop offset="1" stopColor="#FFC331"/>
             </linearGradient>
         </defs>
     </svg>,

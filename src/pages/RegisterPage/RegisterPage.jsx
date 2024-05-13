@@ -4,7 +4,7 @@ import {useState} from "react";
 import {toast} from "react-toastify";
 import {useUserSignupMutation} from "../../features/user/userApi.js";
 
-const SignUp = () => {
+const RegisterPage = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
@@ -34,7 +34,7 @@ const SignUp = () => {
             await signup({
                 name, surname, email, password: password1
             }).unwrap()
-            navigate("/auth/sign_in")
+            navigate("/auth/login")
             toast.success('Акаунт успішно створений! Для продовження увійдіть в акаунт')
         } catch (e) {
             toast.error(e.data.detail)
@@ -47,25 +47,25 @@ const SignUp = () => {
                 <img src={'/logo.jpg'} width="200" height="200"
                      style={{borderRadius: '50%', marginTop: '-130px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)'}}/>
                 <div className={'title'}>
-                    Create your account
+                    Створити аккаунт
                 </div>
-                <input type="name" id="name" name="name" placeholder="Name" required
+                <input type="name" id="name" name="name" placeholder="Ім'я" required
                        onChange={e => setName(e.target.value)}/>
-                <input type="surname" id="surname" name="surname" placeholder="Surname" required
+                <input type="surname" id="surname" name="surname" placeholder="Прізвище" required
                        onChange={e => setSurName(e.target.value)}/>
-                <input type="email" id="email" name="email" placeholder="Email" required
+                <input type="email" id="email" name="email" placeholder="Пошта" required
                        onChange={e => setEmail(e.target.value)}/>
-                <input type="password" id="password" name="password" placeholder="Password" required
+                <input type="password" id="password" name="password" placeholder="Пароль" required
                        onChange={e => setPassword1(e.target.value)}/>
-                <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Repeat your password"
+                <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Повтори пароль"
                        required onChange={e => setPassword2(e.target.value)}/>
-                <button type="submit" className="login-button">Sign up</button>
+                <button type="submit" className="login-button">Реєстрація</button>
                 <div className="signup-link">
-                    Already have an account? <NavLink to="/">Sign in</NavLink>
+                    Вже є аккаунт? <NavLink to="/auth/login">Вхід тут</NavLink>
                 </div>
             </form>
         </div>
     </div>);
 };
 
-export default SignUp
+export default RegisterPage

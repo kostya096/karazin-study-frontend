@@ -1,7 +1,8 @@
-import "./MainPage.css"
-import Header from "../../components/Header/Header.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import {logoutUser} from "../../features/user/userSlice.js";
+import {logoutUser} from "../../../features/user/userSlice.js";
+
+
+
 
 const MainPage = () => {
     const dispatch = useDispatch()
@@ -9,7 +10,7 @@ const MainPage = () => {
 
     return (
         <>
-            <div className="login-container">
+            <div>
                 {user?.name} {user?.surname}
                 <button onClick={() => dispatch(logoutUser())}>Log out</button>
             </div>

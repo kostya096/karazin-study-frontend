@@ -1,7 +1,7 @@
 import React from 'react';
 import {Box, Container, Typography, Grid, Button, AppBar, Toolbar} from '@mui/material';
 import {styled} from '@mui/system';
-import {Link} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import FeatureCard from "../../components/HomePage/FeatureCard.jsx";
 import {MySQLIcon, PythonIcon, ReactIcon} from "../../components/HomePage/Icons.jsx";
 
@@ -28,7 +28,9 @@ const HomePage = () => {
                         From students to students
                     </Typography>
                     <Button variant="contained" color="secondary">
+                        <NavLink to='/auth/login' style={{textDecoration: "none", color: "inherit"}}>
                         Поїхали
+                        </NavLink>
                     </Button>
                 </Container>
             </HeroSection>
@@ -44,8 +46,8 @@ const HomePage = () => {
                                 icon={ReactIcon}
                                 title="React"
                                 description="Redux
-
-                                "
+                                Vite
+                                MaterialUI Components"
                             />
                         </Grid>
                         <Grid item xs={12} sm={6} md={4}>

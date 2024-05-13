@@ -20,7 +20,7 @@ const LoginPage = () => {
                 email,
                 password
             }).unwrap()
-            navigate("/main")
+            navigate("/dashboard")
         } catch(e) {
             toast.error(e.data.detail)
         }
@@ -31,15 +31,15 @@ const LoginPage = () => {
                 <img src={'/logo.jpg'} width="200" height="200"
                      style={{borderRadius: '50%', marginTop: '-130px', boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)'}}/>
                 <div className={'title'}>
-                    Welcome back
+                    З поверненням!
                 </div>
-                <input type="email" id="email" name="email" placeholder="Email" required
+                <input type="email" id="email" name="email" placeholder="Пошта" required
                        onChange={e => setEmail(e.target.value)}/>
-                <input type="password" id="password" name="password" placeholder="Password" required
+                <input type="password" id="password" name="password" placeholder="Пароль" required
                        onChange={e => setPassword(e.target.value)}/>
-                <button type="submit" className="login-button">Sign in</button>
+                <button type="submit" className="login-button">Увійти</button>
                 <div className="signup-link">
-                    No account? <NavLink to="/auth/sign_up">Create one</NavLink>
+                    Немає аккаунту? <NavLink to="/auth/register">Створи його тут</NavLink>
                 </div>
             </form>
         </div>

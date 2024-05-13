@@ -1,19 +1,12 @@
-import React, {useState} from 'react';
-import {Drawer, List, ListItem, ListItemText, IconButton} from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {Drawer, List, ListItem, ListItemText, ListItemButton, ListItemIcon, IconButton} from '@mui/material';
 import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Box from "@mui/material/Box";
 import {styled, useTheme} from '@mui/material/styles';
-import MainPage from "../../pages/Dashboard/MainPage/MainPage.jsx";
-import {CastForEducation, Home, KeyboardArrowLeft, TableView} from "@mui/icons-material";
-import MarksPage from "../../pages/Dashboard/MainPage/MarksPage.jsx";
-import CoursesPage from "../../pages/Dashboard/MainPage/CoursesPage.jsx";
-import MenuIcon from "@mui/icons-material/Menu";
-
+import {KeyboardArrowLeft, Menu} from "@mui/icons-material";
 
 const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
     ({theme, open}) => ({
@@ -23,7 +16,7 @@ const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
         }),
-        marginLeft: `-240px`,
+        marginLeft: `-200px`,
         ...(open && {
             transition: theme.transitions.create('margin', {
                 easing: theme.transitions.easing.easeOut,
@@ -34,83 +27,79 @@ const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
     }),
 );
 
-
-const Navbar = () => {
+const Navbar = ({items}) => {
     const [open, setOpen] = useState(false);
-    const [element, setElement] = useState(<MainPage/>);
+    const [element, setElement] = useState(null);
     const theme = useTheme();
+
     const toggleDrawer = () => {
         setOpen(!open);
+    };
+
+    const handleItemClick = (pageComponent) => {
+        setElement(pageComponent);
+        setOpen(false); // Close drawer when an item is clicked
+    };
+
+    useEffect(() => {
+        setElement(items[0].page);
+    }, []);
+
+    const renderListItems = () => {
+        return items.map((item, index) => {
+            if (item === "divide") {
+                return <Divider key={index}/>;
+            } else {
+                const {title, icon: Icon, page} = item;
+                return (
+                    <ListItem disablePadding key={title} button onClick={() => handleItemClick(page)}>
+                        <ListItemButton sx={{}}>
+                            <ListItemIcon sx={{color: theme.palette.primary.contrastText}}>
+                                <Icon/>
+                            </ListItemIcon>
+                            <ListItemText primary={title} sx={{opacity: open ? 1 : 0}}/>
+                        </ListItemButton>
+                    </ListItem>
+                );
+            }
+        });
     };
 
     return (
         <Box sx={{display: 'flex'}}>
             <CssBaseline/>
-            {open ? null : (
-                <Toolbar>
-
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={toggleDrawer}
-                        edge="start"
-                        sx={{mr: 1}}
-                    >
-                        <MenuIcon/>
-                    </IconButton>
-                    <Typography variant="h6" noWrap component="div">
-                        Навігація
-                    </Typography>
-                </Toolbar>
-            )}
             <Drawer
                 sx={{
                     width: 240,
                     flexShrink: 0,
                     '& .MuiDrawer-paper': {
-                        width: 240,
+                        width: open ? 240 : theme.spacing(7),
                         boxSizing: 'border-box',
-                        marginTop: "64px"
+                        marginTop: "64px",
+                        transition: theme.transitions.create('width', {
+                            easing: theme.transitions.easing.sharp,
+                            duration: theme.transitions.duration.enteringScreen,
+                        }),
+                        backgroundColor: theme.palette.primary.main,
+                        color: theme.palette.primary.contrastText,
                     },
                 }}
-                variant="persistent"
+                variant="permanent"
                 anchor="left"
                 open={open}
             >
-                <Toolbar>
-                    <IconButton onClick={toggleDrawer}>
-                        <KeyboardArrowLeft/>
-                    </IconButton>
-                </Toolbar>
-                <Divider/>
                 <List>
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={() => setElement(<MainPage/>)}>
-                            <ListItemIcon>
-                                <Home/>
+
+                    <ListItem disablePadding button onClick={toggleDrawer}>
+                        <ListItemButton>
+                            <ListItemIcon sx={{color: theme.palette.primary.contrastText}}>
+                                {open ? <KeyboardArrowLeft/> : <Menu/>}
                             </ListItemIcon>
-                            <ListItemText primary="Головна"/>
+                            <ListItemText primary="Навігація"/>
                         </ListItemButton>
                     </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={() => setElement(<CoursesPage/>)}>
-                            <ListItemIcon>
-                                <CastForEducation/>
-                            </ListItemIcon>
-                            <ListItemText primary="Мої курси"/>
-                        </ListItemButton>
-                    </ListItem>
-                </List>
-                <Divider/>
-                <List>
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={() => setElement(<MarksPage/>)}>
-                            <ListItemIcon>
-                                <TableView/>
-                            </ListItemIcon>
-                            <ListItemText primary="Оцінки"/>
-                        </ListItemButton>
-                    </ListItem>
+                    <Divider/>
+                    {renderListItems()}
                 </List>
             </Drawer>
             <Main open={open}>

@@ -103,7 +103,7 @@ const Navbar = ({items}) => {
                 </List>
             </Drawer>
             <Main open={open}>
-                {element}
+                {element && React.cloneElement(element, {setElement})}
             </Main>
         </Box>
     );

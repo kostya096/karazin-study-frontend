@@ -16,6 +16,8 @@ function App() {
         <BrowserRouter>
             <ToastContainer theme={'colored'}/>
             <Header/>
+            <br/>
+            <br/>
             <Routes>
                 <Route path='/' element={<CheckAuth/>}>
                     <Route path="" element={<HomePage/>}/>

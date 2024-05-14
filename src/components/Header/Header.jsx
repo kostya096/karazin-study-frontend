@@ -33,7 +33,7 @@ function Header() {
 
     return (
 
-        <AppBar position="static">
+        <AppBar position="fixed">
             <Container maxWidth="xl" sx={{
                 paddingRight: 0
             }}>

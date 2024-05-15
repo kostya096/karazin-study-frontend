@@ -2,7 +2,6 @@ import {useGetUserCoursesQuery} from "../../../features/courses/coursesApi.js";
 import {styled} from '@mui/material/styles';
 import {Card, CardContent, Typography, Container, CardMedia, ButtonBase, CardActionArea} from '@mui/material';
 import {serverURL} from "../../../features/config.js";
-import MainPage from "./MainPage.jsx";
 import CourseTasksPage from "./CourseTasksPage.jsx";
 
 function CoursesPage({setElement}) {

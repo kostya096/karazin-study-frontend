@@ -7,18 +7,12 @@ export const coursesApi = createApi({
     endpoints: (builder) => ({
         getUserCourses: builder.query({
             query: () => '/my',
-            // onQueryStarted: async (_, {dispatch, queryFulfilled}) => {
-            //     try {
-            //         const {data} = await queryFulfilled;
-            //         console.log(data)
-            //         dispatch(setUser({user: data}))
-            //     } catch(e) {
-            //         dispatch(logoutUser())
-            //     }
-            // }
+        }),
+        getCourseById: builder.query({
+            query: (courseId) => `/${courseId}`,
         }),
 
     }),
 });
 
-export const {useGetUserCoursesQuery} = coursesApi;
+export const {useGetUserCoursesQuery, useGetCourseByIdQuery} = coursesApi;

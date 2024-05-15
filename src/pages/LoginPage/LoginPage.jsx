@@ -1,7 +1,7 @@
 import "./LoginPage.css"
 import {NavLink, useNavigate} from "react-router-dom";
 import {useState} from "react";
-import {useUserLoginMutation} from "../../features/user/userApi.js";
+import {useUserLoginMutation} from "../../features/user/userAPI.js";
 import {toast} from "react-toastify";
 
 

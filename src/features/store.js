@@ -1,26 +1,29 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {userSlice} from "./user/userSlice.js";
-import {userApi} from "./user/userApi.js";
+import {userAPI} from "./user/userAPI.js";
 import {adminSlice} from "./admin/slices.js";
-import {coursesApi} from "./courses/coursesApi.js";
-import {timetableApi} from "./timetable/timetableApi.js";
-import {tasksApi} from "./tasks/tasksApi.js";
+import {coursesAPI} from "./courses/coursesAPI.js";
+import {timetableAPI} from "./timetable/timetableAPI.js";
+import {tasksAPI} from "./tasks/tasksAPI.js";
+import {groupsAPI} from "./groups/groupsAPI.js";
 
 export const store = configureStore({
     reducer: {
         [userSlice.name]: userSlice.reducer,
-        [userApi.reducerPath]: userApi.reducer,
-        [coursesApi.reducerPath]: coursesApi.reducer,
-        [timetableApi.reducerPath]: timetableApi.reducer,
-        [tasksApi.reducerPath]: tasksApi.reducer,
+        [userAPI.reducerPath]: userAPI.reducer,
+        [coursesAPI.reducerPath]: coursesAPI.reducer,
+        [timetableAPI.reducerPath]: timetableAPI.reducer,
+        [tasksAPI.reducerPath]: tasksAPI.reducer,
+        [groupsAPI.reducerPath]: groupsAPI.reducer,
         admin: adminSlice.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
-            .concat(userApi.middleware)
-            .concat(coursesApi.middleware)
-            .concat(timetableApi.middleware)
-            .concat(tasksApi.middleware),
+            .concat(userAPI.middleware)
+            .concat(coursesAPI.middleware)
+            .concat(timetableAPI.middleware)
+            .concat(tasksAPI.middleware)
+            .concat(groupsAPI.middleware),
 
 });
 

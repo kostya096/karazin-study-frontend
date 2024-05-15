@@ -1,12 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Drawer, List, ListItem, ListItemText, ListItemButton, ListItemIcon, IconButton} from '@mui/material';
 import CssBaseline from "@mui/material/CssBaseline";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import {styled, useTheme} from '@mui/material/styles';
 import {KeyboardArrowLeft, Menu} from "@mui/icons-material";
+import {Link} from 'react-router-dom';
 
 const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
     ({theme, open}) => ({
@@ -27,9 +26,8 @@ const Main = styled('main', {shouldForwardProp: (prop) => prop !== 'open'})(
     }),
 );
 
-const Navbar = ({items}) => {
+const Navbar = ({items, element}) => {
     const [open, setOpen] = useState(false);
-    const [element, setElement] = useState(null);
     const theme = useTheme();
 
     const toggleDrawer = () => {
@@ -37,22 +35,18 @@ const Navbar = ({items}) => {
     };
 
     const handleItemClick = (pageComponent) => {
-        setElement(pageComponent);
+        //setElement(pageComponent);
         setOpen(false); // Close drawer when an item is clicked
     };
-
-    useEffect(() => {
-        setElement(items[0].page);
-    }, []);
 
     const renderListItems = () => {
         return items.map((item, index) => {
             if (item === "divide") {
                 return <Divider key={index}/>;
             } else {
-                const {title, icon: Icon, page} = item;
+                const {title, icon: Icon, link} = item;
                 return (
-                    <ListItem disablePadding key={title} button onClick={() => handleItemClick(page)}>
+                    <ListItem disablePadding key={title} button component={Link} to={link}>
                         <ListItemButton sx={{}}>
                             <ListItemIcon sx={{color: theme.palette.primary.contrastText}}>
                                 <Icon/>
@@ -103,7 +97,7 @@ const Navbar = ({items}) => {
                 </List>
             </Drawer>
             <Main open={open}>
-                {element && React.cloneElement(element, {setElement})}
+                {element}
             </Main>
         </Box>
     );

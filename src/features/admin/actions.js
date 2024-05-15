@@ -26,4 +26,24 @@ export const fetchUsers = createAsyncThunk('Admin/fetchUsers', async ({skip, lim
         }
     }
 });
-export default fetchUsers;
+
+
+export const fetchGroupsWithStudents = createAsyncThunk('Admin/fetchGroupsWithStudents', async () => {
+    try {
+
+        const response = await fetch(`${serverURL}/groups/with_users`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch groups');
+        }
+
+        const data = await response.json();
+        return data
+    } catch (error) {
+        if (error.response && error.response.data && error.response.data.detail) {
+            return error.response.data.detail
+        } else {
+            return 'An error occurred while fetching users'
+        }
+    }
+});
+export default {fetchGroupsWithStudents, fetchUsers};

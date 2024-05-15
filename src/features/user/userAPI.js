@@ -2,7 +2,7 @@ import {createApi} from "@reduxjs/toolkit/query/react";
 import {logoutUser, setUser} from "./userSlice.js";
 import {getBaseQuery} from "../config.js";
 
-export const userApi = createApi({
+export const userAPI = createApi({
     reducerPath: 'userApi',
     baseQuery: getBaseQuery('auth'),
     endpoints: (builder) => ({
@@ -11,7 +11,6 @@ export const userApi = createApi({
             onQueryStarted: async (_, {dispatch, queryFulfilled}) => {
                 try {
                     const {data} = await queryFulfilled;
-                    console.log(data)
                     dispatch(setUser({user: data}))
                 } catch(e) {
                     dispatch(logoutUser())
@@ -45,4 +44,4 @@ export const userApi = createApi({
     }),
 });
 
-export const {useGetMeQuery, useUserSignupMutation, useUserLoginMutation} = userApi;
+export const {useGetMeQuery, useUserSignupMutation, useUserLoginMutation} = userAPI;

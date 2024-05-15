@@ -2,7 +2,7 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {useState} from "react";
 // import {getUserInfo, loginUser, registerUser} from "../../components/functions/auth.jsx";
 import {toast} from "react-toastify";
-import {useUserSignupMutation} from "../../features/user/userApi.js";
+import {useUserSignupMutation} from "../../features/user/userAPI.js";
 
 const RegisterPage = () => {
     const navigate = useNavigate();

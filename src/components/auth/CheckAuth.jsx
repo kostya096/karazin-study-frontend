@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import {useGetMeQuery} from "../../features/user/userApi.js";
+import {useGetMeQuery} from "../../features/user/userAPI.js";
 
 export default function CheckAuth({children}) {
     const token = localStorage.getItem('token');

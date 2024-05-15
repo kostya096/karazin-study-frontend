@@ -6,10 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import CheckAuth from "./components/auth/CheckAuth.jsx";
 import {ProtectedRoute, AdminRoute} from "./components/auth/ProtectedRoute.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
-import Header from "./components/Header/Header.jsx";
-import Dashboard from "./pages/Dashboard/Dashboard.jsx";
+import Header from "./components/Multi/Header.jsx";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
-import AdminPage from "./pages/AdminPage/AdminPage.jsx";
+import CoursesPage from "./pages/Dashboard/MainPage/CoursesPage.jsx";
+import React from "react";
+import DashboardMainPage from "./pages/Dashboard/MainPage/MainPage.jsx";
+import AdminMainPage from "./pages/AdminPage/MainPage.jsx";
+import CourseTasksPage from "./pages/Dashboard/MainPage/CourseTasksPage.jsx";
+import UsersPage from "./pages/AdminPage/UsersPage.jsx";
+import AdminCoursesPage from "./pages/AdminPage/CoursesPage.jsx";
+import GroupsPage from "./pages/AdminPage/GroupsPage.jsx";
 
 function App() {
     return (
@@ -20,10 +26,12 @@ function App() {
             <br/>
             <Routes>
                 <Route path='/' element={<CheckAuth/>}>
-                    <Route path="" element={<HomePage/>}/>
+                    <Route index element={<HomePage/>}/>
 
-                    <Route path="dashboard" element={<ProtectedRoute redirectPath="/auth/login"/>}>
-                        <Route path="" element={<Dashboard/>}/>
+                    <Route path="/dashboard" element={<ProtectedRoute redirectPath="/auth/login"/>}>
+                        <Route index element={<DashboardMainPage/>}/>
+                        <Route path="courses" element={<CoursesPage/>}/>
+                        <Route path="courses/:courseId" element={<CourseTasksPage/>}/>
                     </Route>
 
                     <Route path='/auth' element={<ProtectedRoute shouldLoggedIn={false} redirectPath="/dashboard"/>}>
@@ -33,8 +41,10 @@ function App() {
 
 
                     <Route path='/admin' element={<AdminRoute redirectPath="/dashboard"/>}>
-
-                        <Route path="" element={<AdminPage/>}/>
+                        <Route index element={<AdminMainPage/>}/>
+                        <Route path="users" element={<UsersPage/>}/>
+                        <Route path="groups" element={<GroupsPage/>}/>
+                        <Route path="courses" element={<AdminCoursesPage/>}/>
                     </Route>
                 </Route>
 

@@ -11,7 +11,6 @@ export const userSlice = createSlice({
     reducers: {
         setUser: (state, action) => {
             state.user = action.payload.user;
-            console.log('action.payload', action.payload)
             if(action.payload.access_token !== undefined) {
                 state.token = action.payload.access_token;
                 localStorage.setItem('token', action.payload.access_token);

@@ -1,7 +1,7 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
 import {getBaseQuery} from "../config.js";
 
-export const coursesApi = createApi({
+export const coursesAPI = createApi({
     reducerPath: 'coursesApi',
     baseQuery: getBaseQuery('courses'),
     endpoints: (builder) => ({
@@ -15,4 +15,4 @@ export const coursesApi = createApi({
     }),
 });
 
-export const {useGetUserCoursesQuery, useGetCourseByIdQuery} = coursesApi;
+export const {useGetUserCoursesQuery, useGetCourseByIdQuery} = coursesAPI;

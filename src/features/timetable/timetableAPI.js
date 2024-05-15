@@ -1,7 +1,7 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
 import {getBaseQuery} from "../config.js";
 
-export const timetableApi = createApi({
+export const timetableAPI = createApi({
     reducerPath: 'timetableApi',
     baseQuery: getBaseQuery('timetable'),
     endpoints: (builder) => ({
@@ -22,4 +22,4 @@ export const timetableApi = createApi({
     }),
 });
 
-export const {useGetTimeTableQuery} = timetableApi;
+export const {useGetTimeTableQuery} = timetableAPI;

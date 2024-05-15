@@ -1,7 +1,7 @@
 import {createApi} from "@reduxjs/toolkit/query/react";
 import {getBaseQuery} from "../config.js";
 
-export const tasksApi = createApi({
+export const tasksAPI = createApi({
     reducerPath: 'tasksApi',
     baseQuery: getBaseQuery('tasks'),
     endpoints: (builder) => ({
@@ -20,4 +20,4 @@ export const tasksApi = createApi({
     }),
 });
 
-export const {useGetUserTasksQuery, useSendTaskForReviewMutation} = tasksApi;
+export const {useGetUserTasksQuery, useSendTaskForReviewMutation} = tasksAPI;

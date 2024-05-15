@@ -2,9 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button, Checkbox, Table, TableBody, TableCell, TableHead, TableRow, TextField, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
-import fetchUsers from "../../features/admin/actions.js";
-import Paginator from "../../components/Dashboard/Paginator.jsx";
-import SearchField from "../../components/Dashboard/SearchField.jsx";
+import {fetchUsers} from "../../features/admin/actions.js";
+import Paginator from "../../components/Admin/Paginator.jsx";
+import SearchField from "../../components/Admin/SearchField.jsx";
+import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
 
 
 function UsersPage() {
@@ -45,7 +46,7 @@ function UsersPage() {
 
 
     return (
-        <div>
+        <AdminTemplate>
             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 30}}>
                 <Typography variant="h5" component="h1" gutterBottom>
                     Список користувачів
@@ -111,7 +112,7 @@ function UsersPage() {
                 </Box>
             )}
             <Paginator currentPage={currentPage} nextPage={has_next} onChangePage={handleChangePage}/>
-        </div>
+        </AdminTemplate>
     );
 }
 

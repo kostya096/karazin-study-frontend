@@ -9,7 +9,6 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import Header from "./components/Multi/Header.jsx";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import CoursesPage from "./pages/Dashboard/MainPage/CoursesPage.jsx";
-import React from "react";
 import DashboardMainPage from "./pages/Dashboard/MainPage/MainPage.jsx";
 import AdminMainPage from "./pages/AdminPage/MainPage.jsx";
 import CourseTasksPage from "./pages/Dashboard/MainPage/CourseTasksPage.jsx";

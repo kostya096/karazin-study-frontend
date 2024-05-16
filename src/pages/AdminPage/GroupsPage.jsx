@@ -1,86 +1,84 @@
-import {useEffect, useState} from 'react';
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
+import {Container} from '@mui/material';
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary,
-    Button,
-    Checkbox,
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableRow,
-    Typography
-} from "@mui/material";
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {useGetGroupsWithUsers} from "../../features/groups/groupsAPI.js";
-
-function CollapsingTable({data}) {
-    return (
-        <Table>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Група</TableCell>
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {data.map(group => (
-                    <TableRow key={group.id}>
-                        <TableCell>
-                            <Accordion>
-                                <AccordionSummary
-                                    expandIcon={<ExpandMoreIcon/>}
-                                    aria-controls="panel1a-content"
-                                    id="panel1a-header"
-                                >
-                                    <Typography>{group.name}</Typography>
-                                </AccordionSummary>
-                                <AccordionDetails>
-                                    <Table>
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell>ID</TableCell>
-                                                <TableCell>Ім'я</TableCell>
-                                                <TableCell>Прізвище</TableCell>
-                                                <TableCell>Пошта</TableCell>
-                                                <TableCell>Дії</TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {group.users.map(user => (
-                                                <TableRow key={user.id}>
-                                                    <TableCell>{user.id}</TableCell>
-                                                    <TableCell>{user.firstName}</TableCell>
-                                                    <TableCell>{user.lastName}</TableCell>
-                                                    <TableCell>{user.email}</TableCell>
-                                                    <TableCell>Actions for {user.firstName}</TableCell>
-                                                </TableRow>
-                                            ))}
-                                        </TableBody>
-                                    </Table>
-                                </AccordionDetails>
-                            </Accordion>
-                        </TableCell>
-                    </TableRow>
-                ))}
-            </TableBody>
-        </Table>
-    );
-}
-
+    useCreateGroupMutation,
+    useDeleteGroupMutation,
+    useEditGroupMutation,
+    useGetGroupsUsersQuery
+} from "../../features/groups/groupsAPI.js";
+import GroupsForm from "../../components/Admin/GroupsPage/GroupsForm.jsx";
+import {toast} from "react-toastify";
+import {useState} from "react";
+import {useEditUserMutation} from "../../features/user/userAPI.js";
+import GroupsPageTable from "../../components/Admin/GroupsPage/GroupsPageTable.jsx";
 
 function GroupsPage() {
-    const {data = []} = useGetGroupsWithUsers();
-    console.log(data)
+    const [editGroupData, setEditGroupData] = useState(null)
+    const {data = [], refetch} = useGetGroupsUsersQuery();
+
+    const [createGroup] = useCreateGroupMutation()
+    const [deleteGroup] = useDeleteGroupMutation()
+    const [editGroup] = useEditGroupMutation()
+    const [editUser] = useEditUserMutation()
+    const groupFormHandler = async (data) => {
+        if (editGroupData) {
+            try {
+                await editGroup(data).unwrap()
+                toast.success('Група успішно оновлена!')
+            } catch (e) {
+                toast.error('Error updating group, please try later')
+            }
+            setEditGroupData(null)
+            return
+        }
+        try {
+            await createGroup(data).unwrap()
+            toast.success('Група успішно створена!')
+        } catch (e) {
+            toast.error('Error creating group, please try later')
+        }
+    }
+    const handleDeleteGroup = async (groupId) => {
+        const confirm = window.confirm('Ви впевнені що хочете видалити групу?')
+        if(!confirm) {
+            return
+        }
+
+        try {
+            await deleteGroup(groupId).unwrap()
+            toast.success('Група успішно видалена!')
+        } catch (e) {
+            toast.error('Error deleting group, please try later')
+        }
+    }
+    const handleEditGroup = (group) => {
+        setEditGroupData(group)
+    }
+
+    const updateUserGroup = async (userId, groupId) => {
+        try {
+            await editUser({id: userId, usergroup_id: groupId}).unwrap()
+            await refetch()
+            toast.success('Студент успішно перенесений!')
+        } catch (e) {
+            toast.error('Error, please try later')
+        }
+    }
+
     return (
         <AdminTemplate>
-            <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 30}}>
-                <Typography variant="h5" component="h1" gutterBottom>
-                    Список груп
-                </Typography>
-            </div>
-            <CollapsingTable data={data}/>
+            <Container>
+                <GroupsForm
+                    onSubmit={groupFormHandler}
+                    initialData={editGroupData}
+                    setEditGroupData={setEditGroupData}/>
+
+                <GroupsPageTable
+                    data={data}
+                    handleDeleteGroup={handleDeleteGroup}
+                    handleEditGroup={handleEditGroup}
+                    updateUserGroup={updateUserGroup}/>
+            </Container>
         </AdminTemplate>
     );
 }

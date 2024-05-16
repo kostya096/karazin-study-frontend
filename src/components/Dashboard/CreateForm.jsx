@@ -1,22 +1,20 @@
-import React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const CourseTaskForm = ({fields}) => {
+const CourseTaskForm = ({fields, imagePreview}) => {
     return (
         <Box
             sx={{
+                marginTop: '20px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                justifyContent: 'center',
-                height: '50vh',
             }}
         >
             <Typography variant="h4" gutterBottom>
-                Course Task Form
+                Створити новий курс
             </Typography>
             <Box sx={{width: '50%'}}>
                 {fields.map((field, index) => (
@@ -34,6 +32,7 @@ const CourseTaskForm = ({fields}) => {
                                 onChange={(e) => {
                                     field.set_input(e.target.value);
                                 }}
+                                value={field.input}
                                 sx={{width: '100%'}}
                             />
                         )}
@@ -48,8 +47,32 @@ const CourseTaskForm = ({fields}) => {
                                 onChange={(e) => {
                                     field.set_input(e.target.value);
                                 }}
+                                value={field.input}
                                 sx={{width: '100%'}}
                             />
+
+                        )}
+                        {field.type === 'input_image' && (
+                            <>
+                                {imagePreview ? (
+                                    <img src={imagePreview} alt="Image Preview"
+                                         style={{maxWidth: '100%', maxHeight: '200px', marginTop: '10px'}}/>
+                                ) : (
+
+                                    <Button
+                                        variant="contained"
+                                        component="label"
+                                        sx={{width: '100%', mt: 2}}
+                                    >
+                                        Upload File
+                                        <input
+                                            type="file"
+                                            hidden
+                                            onChange={e => field.set_input(e)}
+                                        />
+                                    </Button>
+                                )}
+                            </>
 
                         )}
                         <div style={{paddingBottom: 20}}/>

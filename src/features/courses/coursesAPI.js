@@ -11,8 +11,27 @@ export const coursesAPI = createApi({
         getCourseById: builder.query({
             query: (courseId) => `/${courseId}`,
         }),
+        createCourse: builder.mutation({
+            query: (body) => ({
+                url: '/create',
+                method: 'POST',
+                body
+            }),
+        }),
+        uploadCourseImage : builder.mutation({
+            query: ({img_name, file}) => ({
+                url: `../files/upload?img_name=${img_name}`,
+                method: 'POST',
+                body: file,
+            }),
+        })
 
     }),
 });
 
-export const {useGetUserCoursesQuery, useGetCourseByIdQuery} = coursesAPI;
+export const {
+    useGetUserCoursesQuery,
+    useGetCourseByIdQuery,
+    useCreateCourseMutation,
+    useUploadCourseImageMutation
+} = coursesAPI;

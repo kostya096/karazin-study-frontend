@@ -25,50 +25,53 @@ function MainPage() {
         "FRIDAY": "П'ятниця"
     }
 
+    const {upper_lower_week, ...days} = data
+
     if (isLoading) {
-        return
+        return <CircularProgress/>
     }
 
-    const {upper_lower_week, ...days} = data
 
     return (
 
         <DashboardTemplate>
-            {isLoading ? <CircularProgress/> :
-                <Container>
-                    Тиждень: <b>{upper_lower_week.toLowerCase() === 'верхня' ? 'верхній' : 'нижній'}</b>
-                    {Object.keys(days).map((day, key) => (
-                        <div key={key}>
-                            <Typography variant="h6" gutterBottom>{day_normalizer[day].toUpperCase()}</Typography>
-                            <TableContainer component={Paper} style={{marginBottom: '20px'}}>
-                                <Table>
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Номер заняття</TableCell>
-                                            <TableCell>Назва заняття</TableCell>
-                                            <TableCell>Тип заняття</TableCell>
-                                            <TableCell>Викладач</TableCell>
-                                            <TableCell>Посилання</TableCell>
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {Object.keys(data[day]).map((lessonNumber, lessonKey) => (
-                                            <TableRow key={lessonKey}>
-                                                <TableCell>{lessonKey + 1}</TableCell>
-                                                <TableCell>{data[day][lessonNumber]?.lesson_name || '-'}</TableCell>
-                                                <TableCell>{data[day][lessonNumber]?.lesson_type || '-'}</TableCell>
-                                                <TableCell>{data[day][lessonNumber]?.teacher || '-'}</TableCell>
-                                                <TableCell>{data[day][lessonNumber]?.url ?
-                                                    <a href={data[day][lessonNumber]?.url}>Посилання</a> : '-'}</TableCell>
+            <Container>
+                Тиждень: <b>{upper_lower_week.toLowerCase() === 'верхня' ? 'верхній' : 'нижній'}</b>
+                {Object.keys(days).map((day, key) => (
+                    <div key={key}>
+                        <Typography variant="h6" gutterBottom>{day_normalizer[day].toUpperCase()}</Typography>
+                        {!days[day] ? 'Розклад відсутній' : (
+                            <>
+                                <TableContainer component={Paper} style={{marginBottom: '20px'}}>
+                                    <Table>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Номер заняття</TableCell>
+                                                <TableCell>Назва заняття</TableCell>
+                                                <TableCell>Тип заняття</TableCell>
+                                                <TableCell>Викладач</TableCell>
+                                                <TableCell>Посилання</TableCell>
                                             </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </div>
-                    ))}
-                </Container>
-            }
+                                        </TableHead>
+                                        <TableBody>
+                                            {Object.keys(data[day]).map((lessonNumber, lessonKey) => (
+                                                <TableRow key={lessonKey}>
+                                                    <TableCell>{lessonKey + 1}</TableCell>
+                                                    <TableCell>{data[day][lessonNumber]?.lesson_name || '-'}</TableCell>
+                                                    <TableCell>{data[day][lessonNumber]?.lesson_type || '-'}</TableCell>
+                                                    <TableCell>{data[day][lessonNumber]?.teacher || '-'}</TableCell>
+                                                    <TableCell>{data[day][lessonNumber]?.url ?
+                                                        <a href={data[day][lessonNumber]?.url}>Посилання</a> : '-'}</TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </>
+                        )}
+                    </div>
+                ))}
+            </Container>
         </DashboardTemplate>
 
     );

@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const CourseTaskForm = ({fields, imagePreview}) => {
+const CourseTaskForm = ({form_name, fields, imagePreview}) => {
     return (
         <Box
             sx={{
@@ -14,7 +14,7 @@ const CourseTaskForm = ({fields, imagePreview}) => {
             }}
         >
             <Typography variant="h4" gutterBottom>
-                Створити новий курс
+                {form_name}
             </Typography>
             <Box sx={{width: '50%'}}>
                 {fields.map((field, index) => (
@@ -32,7 +32,6 @@ const CourseTaskForm = ({fields, imagePreview}) => {
                                 onChange={(e) => {
                                     field.set_input(e.target.value);
                                 }}
-                                value={field.input}
                                 sx={{width: '100%'}}
                             />
                         )}
@@ -47,7 +46,6 @@ const CourseTaskForm = ({fields, imagePreview}) => {
                                 onChange={(e) => {
                                     field.set_input(e.target.value);
                                 }}
-                                value={field.input}
                                 sx={{width: '100%'}}
                             />
 

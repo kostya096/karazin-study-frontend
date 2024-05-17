@@ -1,67 +1,43 @@
-import {useState} from 'react';
-import CourseTaskForm from "../../components/Dashboard/CreateForm.jsx";
-import {useCreateCourseMutation, useUploadCourseImageMutation} from "../../features/courses/coursesAPI.js";
-import {toast} from "react-toastify";
+import {Typography, Container, CardActionArea, Grid, Button} from '@mui/material';
+import {Link} from "react-router-dom"
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
-import {Container} from "@mui/material";
+import CourseCard from "../../components/Dashboard/CourseCard.jsx";
+import {useGetAdminCoursesQuery} from "../../features/courses/coursesAPI.js";
+import SearchField from "../../components/Admin/SearchField.jsx";
+import {Add} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+
 
 function CoursesPage() {
-    const [CourseName, setCourseName] = useState('');
-    const [CourseDescription, setCourseDescription] = useState('');
-    const [CourseImage, setCourseImage] = useState('');
-    const [imagePreview, setImagePreview] = useState(null)
-
-    const [createCourse] = useCreateCourseMutation()
-    const [uploadImage] = useUploadCourseImageMutation()
-
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setCourseImage(file);
-
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setImagePreview(reader.result);
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const handleCreateButton = async () => {
-        try {
-            const formData = new FormData()
-            formData.append('file', CourseImage)
-            console.log(CourseImage)
-            const res = await uploadImage({img_name: CourseName, file: formData}).unwrap()
-            const data = {
-                name: CourseName,
-                description: CourseDescription,
-                image_id: res.id,
-                groups: [],
-                teachers: []
-            }
-
-            await createCourse(data).unwrap()
-            toast.success('Курс успішно створений!')
-            setCourseName('')
-            setCourseDescription('')
-            setCourseImage('')
-            setImagePreview(null)
-        } catch (e) {
-            toast.error('Сталася помилка, спробуйте пізніше')
-        }
-    }
-
-    const fields = [
-        {name: "Назва курсу", type: "input_text", input: CourseName, set_input: setCourseName},
-        {name: "Опис курсу", type: "input_text_big", input: CourseDescription, set_input: setCourseDescription},
-        {name: "Зображення курсу", type: "input_image", input: CourseImage, set_input: handleFileChange},
-        {name: "Створити", type: "button", input: handleCreateButton}
-    ]
-
-
+    const {data = []} = useGetAdminCoursesQuery();
     return (
+
         <AdminTemplate>
             <Container>
-                <CourseTaskForm fields={fields} imagePreview={imagePreview}/>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                    marginTop: 30
+                }}>
+                    <Typography variant="h5" component="h1" gutterBottom>
+                        Список всіх курсів та завдань
+                    </Typography>
+                    <div style={{display: 'flex', alignItems: 'center'}}>
+                        <div>
+                            <IconButton color="primary" size="large" component={Link} to="/admin/courses/create">
+                                <Add/>
+                            </IconButton>
+                        </div>
+                    </div>
+
+                </div>
+                {data.map((course, index) => (
+                    <CardActionArea component={Link} to={`/admin/courses/edit/${course.id}`} key={index}>
+                        <CourseCard courseData={course}/>
+                    </CardActionArea>
+                ))}
             </Container>
         </AdminTemplate>
     );

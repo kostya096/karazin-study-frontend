@@ -14,6 +14,10 @@ import AdminMainPage from "./pages/AdminPage/MainPage.jsx";
 import CourseTasksPage from "./pages/Dashboard/MainPage/CourseTasksPage.jsx";
 import UsersPage from "./pages/AdminPage/UsersPage.jsx";
 import AdminCoursesPage from "./pages/AdminPage/CoursesPage.jsx";
+import AdminCreateCoursesPage from "./pages/AdminPage/CoursesCreatePage.jsx";
+import AdminEditCoursesPage from "./pages/AdminPage/CoursesEditPage.jsx"
+import AdminCreateTaskPage from "./pages/AdminPage/TaskCreatePage.jsx"
+import AdminEditTaskPage from "./pages/AdminPage/TaskEditPage.jsx"
 import GroupsPage from "./pages/AdminPage/GroupsPage.jsx";
 
 function App() {
@@ -44,6 +48,10 @@ function App() {
                         <Route path="users" element={<UsersPage/>}/>
                         <Route path="groups" element={<GroupsPage/>}/>
                         <Route path="courses" element={<AdminCoursesPage/>}/>
+                        <Route path="courses/create" element={<AdminCreateCoursesPage/>}/>
+                        <Route path="courses/edit/:courseId" element={<AdminEditCoursesPage/>}/>
+                        <Route path="courses/tasks/create/:courseId" element={<AdminCreateTaskPage/>}/>
+                        <Route path="courses/tasks/edit/:taskId" element={<AdminEditTaskPage/>}/>
                     </Route>
                 </Route>
 

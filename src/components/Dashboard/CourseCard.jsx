@@ -1,7 +1,10 @@
-import {CardContent, CardMedia, Typography} from "@mui/material";
+import {
+    CardContent,
+    CardMedia,
+    Typography
+} from "@mui/material";
 import {serverURL} from "../../features/config.js";
 import {StyledCard} from "../Multi/StyledCard.jsx";
-
 
 function CourseCard({courseData}) {
     return (
@@ -27,11 +30,7 @@ function CourseCard({courseData}) {
                 </Typography>
             </CardContent>
         </StyledCard>
-
-
     )
-
-
 }
 
 export default CourseCard

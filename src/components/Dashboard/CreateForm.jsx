@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const CourseTaskForm = ({form_name, fields, imagePreview}) => {
+const CourseTaskForm = ({form_name, fields}) => {
     return (
         <Box
             sx={{
@@ -23,12 +23,13 @@ const CourseTaskForm = ({form_name, fields, imagePreview}) => {
                             <Typography variant="h6">{field.name}</Typography>)
                         }
                         {field.type === "input_text" && (
-
                             <TextField
                                 id={field.name}
                                 label={field.name}
                                 variant="standard"
                                 defaultValue={field.input}
+                                multiline
+                                rows={1}
                                 onChange={(e) => {
                                     field.set_input(e.target.value);
                                 }}
@@ -50,29 +51,6 @@ const CourseTaskForm = ({form_name, fields, imagePreview}) => {
                             />
 
                         )}
-                        {field.type === 'input_image' && (
-                            <>
-                                {imagePreview ? (
-                                    <img src={imagePreview} alt="Image Preview"
-                                         style={{maxWidth: '100%', maxHeight: '200px', marginTop: '10px'}}/>
-                                ) : (
-
-                                    <Button
-                                        variant="contained"
-                                        component="label"
-                                        sx={{width: '100%', mt: 2}}
-                                    >
-                                        Upload File
-                                        <input
-                                            type="file"
-                                            hidden
-                                            onChange={e => field.set_input(e)}
-                                        />
-                                    </Button>
-                                )}
-                            </>
-
-                        )}
                         <div style={{paddingBottom: 20}}/>
                     </div>
                 ))}
@@ -89,7 +67,6 @@ const CourseTaskForm = ({form_name, fields, imagePreview}) => {
                         </div>
                     )
                 )}
-
             </Box>
         </Box>
     );

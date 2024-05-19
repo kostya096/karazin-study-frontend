@@ -16,8 +16,38 @@ export const tasksAPI = createApi({
             }),
             invalidatesTags: ['UserTasks']
         }),
+        getTaskById: builder.query({
+            query: (taskId) => `/${taskId}`,
+        }),
+        createTask: builder.mutation({
+            query: (body) => ({
+                url: `/`,
+                method: 'POST',
+                body
+            }),
+        }),
+        deleteTask: builder.mutation({
+            query: (taskId) => ({
+                url: `/${taskId}`,
+                method: 'DELETE',
+            }),
+        }),
+        editTask: builder.mutation({
+            query: ({taskId, ...body}) => ({
+                url: `/${taskId}`,
+                method: 'PUT',
+                body
+            }),
+        })
 
     }),
 });
 
-export const {useGetUserTasksQuery, useSendTaskForReviewMutation} = tasksAPI;
+export const {
+    useGetUserTasksQuery,
+    useSendTaskForReviewMutation,
+    useCreateTaskMutation,
+    useDeleteTaskMutation,
+    useGetTaskByIdQuery,
+    useEditTaskMutation
+} = tasksAPI;

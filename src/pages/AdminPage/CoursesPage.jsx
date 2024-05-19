@@ -1,15 +1,14 @@
-import {Typography, Container, CardActionArea, Grid, Button} from '@mui/material';
+import {Typography, Container} from '@mui/material';
 import {Link} from "react-router-dom"
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
-import CourseCard from "../../components/Dashboard/CourseCard.jsx";
 import {useGetAdminCoursesQuery} from "../../features/courses/coursesAPI.js";
-import SearchField from "../../components/Admin/SearchField.jsx";
 import {Add} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
+import AdminCourseCard from "../../components/Admin/AdminCourseCard.jsx";
 
 
 function CoursesPage() {
-    const {data = []} = useGetAdminCoursesQuery();
+    const {data = [], refetch} = useGetAdminCoursesQuery();
     return (
 
         <AdminTemplate>
@@ -34,9 +33,10 @@ function CoursesPage() {
 
                 </div>
                 {data.map((course, index) => (
-                    <CardActionArea component={Link} to={`/admin/courses/edit/${course.id}`} key={index}>
-                        <CourseCard courseData={course}/>
-                    </CardActionArea>
+                    <div key={index}>
+                    {/*<CardActionArea component={Link} to={`/admin/courses/edit/${course.id}`} key={index}>*/}
+                        <AdminCourseCard courseData={course} refetch={refetch}/>
+                    </div>
                 ))}
             </Container>
         </AdminTemplate>

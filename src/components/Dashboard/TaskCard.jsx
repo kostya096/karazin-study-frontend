@@ -31,7 +31,7 @@ const TaskCard = ({task, send}) => {
                         Оцінка: {task.score || '0'}/{task.max_score}
                     </Typography>
                 }
-                {task.state == 'Назначено' && (
+                {task.state == 'Призначено' && (
                     <Button
                         variant="contained"
                         color="primary"

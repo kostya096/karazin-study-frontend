@@ -23,7 +23,7 @@ import {toast} from "react-toastify";
 
 function UsersPage() {
     const dispatch = useDispatch();
-    const {users, has_next, loading, error} = useSelector((state) => state.admin);
+    const {users = [], has_next, loading, error} = useSelector((state) => state.admin);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [query, setQuery] = useState('');

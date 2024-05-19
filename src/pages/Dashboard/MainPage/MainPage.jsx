@@ -1,5 +1,4 @@
 import {useSelector} from 'react-redux';
-import {useGetTimeTableQuery} from '../../../features/timetable/timetableAPI.js';
 import {
     Table,
     TableBody,
@@ -13,6 +12,7 @@ import {
     Container
 } from '@mui/material';
 import DashboardTemplate from "../../../components/Dashboard/DashboardTemplate.jsx";
+import {useGetTimeTableQuery} from "../../../features/student/studentAPI.js";
 
 function MainPage() {
     const user = useSelector(store => store.user.user);

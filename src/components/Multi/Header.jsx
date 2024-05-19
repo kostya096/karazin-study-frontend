@@ -107,11 +107,6 @@ function Header() {
                                     onClose={handleCloseUserMenu}
                                 >
 
-                                    <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center" component={Link}
-                                                    to="/user/me/profile"
-                                                    sx={{textDecoration: "none", color: "inherit"}}>Профіль</Typography>
-                                    </MenuItem>
                                     {user.admin ? (<MenuItem onClick={handleCloseUserMenu}>
                                             <Typography textAlign="center" component={Link}
                                                         to="/admin"

@@ -5,7 +5,9 @@ import {IconButton} from '@mui/material';
 import {useTheme} from "@mui/material/styles";
 import {Close, Refresh} from "@mui/icons-material";
 
-const SearchField = ({query, setQuery, searchFunction}) => {
+const SearchField = ({searchFunction}) => {
+    const [query, setQuery] = useState('');
+
     const handleSearch = (e) => {
         e.preventDefault();
         searchFunction(query);

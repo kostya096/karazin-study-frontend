@@ -1,14 +1,14 @@
 import {Typography, Container} from '@mui/material';
 import {Link} from "react-router-dom"
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
-import {useGetAdminCoursesQuery} from "../../features/courses/coursesAPI.js";
 import {Add} from "@mui/icons-material";
 import IconButton from "@mui/material/IconButton";
 import AdminCourseCard from "../../components/Admin/AdminCourseCard.jsx";
+import {useGetCoursesQuery} from "../../features/admin/adminAPI.js";
 
 
 function CoursesPage() {
-    const {data = [], refetch} = useGetAdminCoursesQuery();
+    const {data = [], refetch} = useGetCoursesQuery();
     return (
 
         <AdminTemplate>

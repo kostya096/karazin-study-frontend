@@ -1,11 +1,11 @@
-import {useGetUserCoursesQuery} from "../../../features/courses/coursesAPI.js";
 import {Typography, Container, CardActionArea, Grid} from '@mui/material';
 import {Link} from "react-router-dom"
 import DashboardTemplate from "../../../components/Dashboard/DashboardTemplate.jsx";
 import CourseCard from "../../../components/Dashboard/CourseCard.jsx";
+import {useGetCoursesQuery} from "../../../features/student/studentAPI.js";
 
 function CoursesPage() {
-    const {data = []} = useGetUserCoursesQuery();
+    const {data = []} = useGetCoursesQuery();
     return (
 
         <DashboardTemplate>

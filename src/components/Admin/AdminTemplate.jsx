@@ -4,8 +4,7 @@ import {Folder, Groups, Home, People} from "@mui/icons-material";
 
 function AdminTemplate(props) {
     const nav_items = [
-        {title: "Головна", icon: Home, link: "/admin"},
-        {title: "Користувачі", icon: People, link: "/admin/users"},
+        {title: "Користувачі", icon: People, link: "/admin"},
         {title: "Групи", icon: Groups, link: "/admin/groups"},
         "divide",
         {title: "Курси", icon: Folder, link: "/admin/courses"}

@@ -1,16 +1,16 @@
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
-import {Container} from '@mui/material';
+import {Container, Typography} from '@mui/material';
+import GroupsForm from "../../components/Admin/GroupsPage/GroupsForm.jsx";
+import {toast} from "react-toastify";
+import {useState} from "react";
+import GroupsPageTable from "../../components/Admin/GroupsPage/GroupsPageTable.jsx";
 import {
+    useAddUserToGroupMutation,
     useCreateGroupMutation,
     useDeleteGroupMutation,
     useEditGroupMutation,
     useGetGroupsUsersQuery
-} from "../../features/groups/groupsAPI.js";
-import GroupsForm from "../../components/Admin/GroupsPage/GroupsForm.jsx";
-import {toast} from "react-toastify";
-import {useState} from "react";
-import {useEditUserMutation} from "../../features/user/userAPI.js";
-import GroupsPageTable from "../../components/Admin/GroupsPage/GroupsPageTable.jsx";
+} from "../../features/admin/adminAPI.js";
 
 function GroupsPage() {
     const [editGroupData, setEditGroupData] = useState(null)
@@ -19,7 +19,7 @@ function GroupsPage() {
     const [createGroup] = useCreateGroupMutation()
     const [deleteGroup] = useDeleteGroupMutation()
     const [editGroup] = useEditGroupMutation()
-    const [editUser] = useEditUserMutation()
+    const [addToGroup] = useAddUserToGroupMutation()
     const groupFormHandler = async (data) => {
         if (editGroupData) {
             try {
@@ -57,7 +57,7 @@ function GroupsPage() {
 
     const updateUserGroup = async (userId, groupId) => {
         try {
-            await editUser({id: userId, usergroup_id: groupId}).unwrap()
+            await addToGroup({user_id: userId, group_id: groupId}).unwrap()
             await refetch()
             toast.success('Студент успішно перенесений!')
         } catch (e) {
@@ -68,6 +68,18 @@ function GroupsPage() {
     return (
         <AdminTemplate>
             <Container>
+                <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: 15,
+                    marginTop: 30
+                }}>
+                    <Typography variant="h5" component="h1" gutterBottom>
+                        Список груп
+                    </Typography>
+
+                </div>
                 <GroupsForm
                     onSubmit={groupFormHandler}
                     initialData={editGroupData}

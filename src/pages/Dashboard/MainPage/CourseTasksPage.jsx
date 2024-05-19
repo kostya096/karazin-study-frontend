@@ -1,21 +1,24 @@
-import {useGetCourseByIdQuery, useGetUserCoursesQuery} from "../../../features/courses/coursesAPI.js";
 import {
     Typography,
     Container,
     CircularProgress, Grid, Button
 } from '@mui/material';
-import {useGetUserTasksQuery, useSendTaskForReviewMutation} from "../../../features/tasks/tasksAPI.js";
 import {toast} from "react-toastify";
 import DashboardTemplate from "../../../components/Dashboard/DashboardTemplate.jsx";
 import {useParams} from "react-router-dom";
 import CourseCard from "../../../components/Dashboard/CourseCard.jsx";
 import TaskCard from "../../../components/Dashboard/TaskCard.jsx";
+import {
+    useGetCourseByIdQuery,
+    useGetTasksQuery,
+    useSendTaskForReviewMutation
+} from "../../../features/student/studentAPI.js";
 
 
 function CourseTasksPage() {
     const {courseId} = useParams()
     const {data: courseData, isLoading: courseLoading} = useGetCourseByIdQuery(courseId);
-    const {data: userTasksData, isLoading: tasksLoading} = useGetUserTasksQuery(courseId);
+    const {data: userTasksData, isLoading: tasksLoading} = useGetTasksQuery(courseId);
 
     const [sendTaskForReview] = useSendTaskForReviewMutation()
 

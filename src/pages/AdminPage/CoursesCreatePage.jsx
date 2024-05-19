@@ -1,9 +1,9 @@
 import {useState} from 'react';
 import CourseTaskForm from "../../components/Dashboard/CreateForm.jsx";
-import {useCreateCourseMutation, useUploadCourseImageMutation} from "../../features/courses/coursesAPI.js";
 import {toast} from "react-toastify";
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
 import {Container} from "@mui/material";
+import {useCreateCourseMutation, useUploadCourseImageMutation} from "../../features/admin/adminAPI.js";
 
 function CoursesCreatePage() {
     const [CourseName, setCourseName] = useState('');

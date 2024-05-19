@@ -42,27 +42,12 @@ export const userAPI = createApi({
             })
         }),
 
-        editUser: builder.mutation({
-            query: ({id, ...body}) => ({
-                url: `../users/${id}`,
-                method: 'PUT',
-                body
-            })
-        }),
 
-        deleteUser: builder.mutation({
-            query: (userId) => ({
-                url: `../users/${userId}`,
-                method: 'DELETE',
-            })
-        }),
     }),
 });
 
 export const {
     useGetMeQuery,
     useUserSignupMutation,
-    useUserLoginMutation,
-    useEditUserMutation,
-    useDeleteUserMutation
+    useUserLoginMutation
 } = userAPI;

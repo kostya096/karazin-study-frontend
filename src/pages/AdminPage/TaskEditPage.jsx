@@ -3,8 +3,8 @@ import CourseTaskForm from "../../components/Dashboard/CreateForm.jsx";
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
 import {Container} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
-import {useEditTaskMutation, useGetTaskByIdQuery} from "../../features/tasks/tasksAPI.js";
 import {toast} from "react-toastify";
+import {useEditTaskMutation, useGetTaskByIdQuery} from "../../features/admin/adminAPI.js";
 
 function TaskEditPage() {
     const {taskId} = useParams();

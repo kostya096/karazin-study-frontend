@@ -3,9 +3,9 @@ import CourseTaskForm from "../../components/Dashboard/CreateForm.jsx";
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
 import {CircularProgress, Container} from "@mui/material";
 import {useNavigate, useParams} from "react-router-dom";
-import {useGetCourseByIdQuery} from "../../features/courses/coursesAPI.js";
 import {toast} from "react-toastify";
-import {useCreateTaskMutation} from "../../features/tasks/tasksAPI.js";
+import {useCreateTaskMutation} from "../../features/admin/adminAPI.js";
+import {useGetCourseByIdQuery} from "../../features/student/studentAPI.js";
 
 function TaskCreatePage() {
     const {courseId} = useParams();

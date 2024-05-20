@@ -34,6 +34,7 @@ export const adminAPI = createApi({
             })
         }),
 
+
         // Groups
         getGroups: builder.query({
             query: () => 'groups/',
@@ -103,6 +104,7 @@ export const adminAPI = createApi({
         }),
         getSolvedTasks: builder.query({
             query: (taskId) => `tasks/${taskId}/solved`,
+            providesTags: ['SolvedTasks']
         }),
         createTask: builder.mutation({
             query: (body) => ({
@@ -123,6 +125,14 @@ export const adminAPI = createApi({
                 method: 'PUT',
                 body
             }),
+        }),
+        setScore: builder.mutation({
+            query: ({taskId, userId, ...body}) => ({
+                url: `tasks/${taskId}/${userId}`,
+                method: 'PUT',
+                body
+            }),
+            invalidatesTags: ['SolvedTasks']
         })
 
     }),
@@ -147,5 +157,6 @@ export const {
     useGetSolvedTasksQuery,
     useCreateTaskMutation,
     useDeleteTaskMutation,
-    useEditTaskMutation
+    useEditTaskMutation,
+    useSetScoreMutation
 } = adminAPI;

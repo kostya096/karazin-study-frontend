@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {
     Button,
     Checkbox,
-    Container,
+    Container, Select,
     Table,
     TableBody,
     TableCell,
@@ -16,7 +16,8 @@ import Paginator from "../../components/Admin/Paginator.jsx";
 import SearchField from "../../components/Admin/SearchField.jsx";
 import AdminTemplate from "../../components/Admin/AdminTemplate.jsx";
 import {toast} from "react-toastify";
-import {useDeleteUserMutation, useGetUsersQuery} from "../../features/admin/adminAPI.js";
+import {useDeleteUserMutation, useEditUserMutation, useGetUsersQuery} from "../../features/admin/adminAPI.js";
+import MenuItem from "@mui/material/MenuItem";
 
 
 function UsersPage() {
@@ -28,6 +29,7 @@ function UsersPage() {
     const limit = 10
     const {data = [], isLoading, error, refetch} = useGetUsersQuery({skip, limit, query})
     const [deleteUser] = useDeleteUserMutation()
+    //const [editteUser] = useEditUserMutation()
 
     // useEffect(() => {
     //     refetch()
@@ -96,27 +98,42 @@ function UsersPage() {
                                 <TableCell>Прізвище</TableCell>
                                 <TableCell>Пошта</TableCell>
                                 <TableCell>Група</TableCell>
+                                <TableCell>Викладач</TableCell>
                             </TableRow>
                         </TableHead>
-                            <TableBody>
+                        <TableBody>
 
-                                {data.users.map((user, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>
-                                            <Checkbox sx={{padding: 0}}
-                                                      checked={selectedUsers.includes(user.id)}
-                                                      onChange={() => handleCheckboxChange(user.id)}
-                                            />
-                                        </TableCell>
-                                        <TableCell>{user.id}</TableCell>
-                                        <TableCell>{user.name}</TableCell>
-                                        <TableCell>{user.surname}</TableCell>
-                                        <TableCell>{user.email}</TableCell>
-                                        <TableCell>{user.usergroup.name}</TableCell>
-                                    </TableRow>
-                                ))}
+                            {data.users.map((user, index) => (
+                                <TableRow key={index}>
+                                    <TableCell>
+                                        <Checkbox sx={{padding: 0}}
+                                                  checked={selectedUsers.includes(user.id)}
+                                                  onChange={() => handleCheckboxChange(user.id)}
+                                        />
+                                    </TableCell>
+                                    <TableCell>{user.id}</TableCell>
+                                    <TableCell>{user.name}</TableCell>
+                                    <TableCell>{user.surname}</TableCell>
+                                    <TableCell>{user.email}</TableCell>
+                                    <TableCell>{user.usergroup.name}</TableCell>
+                                    <TableCell>
+                                        <Select
+                                            // onChange={e => setSelectedGroupId(+e.target.value)}
+                                            defaultValue={user.teacher?1:0}
+                                            style={{height:'30px', width:'70px'}}
+                                        >
+                                            <MenuItem value={1}>
+                                                так
+                                            </MenuItem>
+                                            <MenuItem value={0}>
+                                                ні
+                                            </MenuItem>
+                                        </Select>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
 
-                            </TableBody>
+                        </TableBody>
                     </Table>
                 )}
                 {selectedUsers.length > 0 && (

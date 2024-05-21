@@ -16,6 +16,7 @@ export const adminAPI = createApi({
                 }
                 return `users/get_list?${params.toString()}`;
             },
+            providesTags: ['adminUsers']
         }),
         getTeachers: builder.query({
             query: () => 'users/teachers/',
@@ -25,7 +26,8 @@ export const adminAPI = createApi({
                 url: `users/${id}`,
                 method: 'PUT',
                 body
-            })
+            }),
+            invalidatesTags: ['adminUsers']
         }),
         deleteUser: builder.mutation({
             query: (userId) => ({
@@ -33,6 +35,7 @@ export const adminAPI = createApi({
                 method: 'DELETE',
             })
         }),
+
 
 
         // Groups

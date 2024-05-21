@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {
     Button,
     Checkbox,
@@ -8,7 +8,6 @@ import {
     TableCell,
     TableHead,
     TableRow,
-    TextField,
     Typography
 } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -29,7 +28,7 @@ function UsersPage() {
     const limit = 10
     const {data = [], isLoading, error, refetch} = useGetUsersQuery({skip, limit, query})
     const [deleteUser] = useDeleteUserMutation()
-    //const [editteUser] = useEditUserMutation()
+    const [editUser] = useEditUserMutation()
 
     // useEffect(() => {
     //     refetch()
@@ -69,6 +68,16 @@ function UsersPage() {
         }
     }
 
+    const handleEditUser = async (user, teacher) => {
+        const confirm = window.confirm(`Ви впевнені що хочете ${teacher ? 'призначити' : 'зняти з посади'} викадача ${user.name}?`)
+        if(!confirm) return
+        try {
+            await editUser({id: user.id, teacher})
+            toast.success(`Корстувач ${user.name} успішно ${teacher ? 'отримав' : 'втратив'} статус викладача`)
+        } catch (e) {
+            toast.error('Error, please try later')
+        }
+    }
 
     return (
         <AdminTemplate>
@@ -118,8 +127,8 @@ function UsersPage() {
                                     <TableCell>{user.usergroup.name}</TableCell>
                                     <TableCell>
                                         <Select
-                                            // onChange={e => setSelectedGroupId(+e.target.value)}
-                                            defaultValue={user.teacher?1:0}
+                                            onChange={e => handleEditUser(user, +e.target.value === 1)}
+                                            value={user.teacher ? 1 : 0}
                                             style={{height:'30px', width:'70px'}}
                                         >
                                             <MenuItem value={1}>
